@@ -63,7 +63,15 @@ with st.expander("Data Setelah Di-groupby : "):
     st.dataframe(grouped.style.format("{:.2f}"))
 
 with st.sidebar:
+    scale = {
+        "1 - Sama penting": 1,
+        "3 - Sedikit lebih penting": 3,
+        "5 - Cukup lebih penting": 5,
+        "7 - Sangat lebih penting": 7,
+        "9 - Mutlak lebih penting": 9,
+    }
     st.write("## 🧮 Masukkan Nilai Perbandingan Berpasangan")
+    st.table(scale)
 
     n = len(kriteria)
     MPBk = np.ones((n, n))
@@ -107,7 +115,7 @@ with st.expander("Detail : "):
 st.write("#### Alternatif 1 - Seed Yield per Unit Area (SYUA)")
 with st.expander("Detail : "):
     st.write(
-        "#### 📋 Perbandingan Seed Yield per Unit Area (SYUA): Alternatif Kualitatif"
+        "#### 📋 Perbandingan Seed Yield per Unit Area (SYUA): Alternatif Kuantitatif"
     )
     st.dataframe(grouped[["Seed Yield per Unit Area (SYUA)"]].style.format("{:.2f}"))
     # st.write(
@@ -129,7 +137,7 @@ with st.expander("Detail : "):
 
 st.write("#### Alternatif 2 - Number of Pods (NP)")
 with st.expander("Detail : "):
-    st.write("#### 📋 Perbandingan Number of Pods (NP): Alternatif Kualitatif")
+    st.write("#### 📋 Perbandingan Number of Pods (NP): Alternatif Kuantitatif")
     st.dataframe(grouped[["Number of Pods (NP)"]].style.format("{:.2f}"))
 
     # Normalisasi kolom NP
@@ -143,7 +151,7 @@ with st.expander("Detail : "):
 
 st.write("#### Alternatif 3 - Protein Content (PCO)")
 with st.expander("Detail : "):
-    st.write("#### 📋 Perbandingan Protein Content (PCO): Alternatif Kualitatif")
+    st.write("#### 📋 Perbandingan Protein Content (PCO): Alternatif Kuantitatif")
     st.dataframe(grouped[["Protein Content (PCO)"]].style.format("{:.2f}"))
 
     # Normalisasi kolom PCO
@@ -158,7 +166,7 @@ with st.expander("Detail : "):
 st.write("#### Alternatif 4 - Relative Water Content in Leaves (RWCL)")
 with st.expander("Detail : "):
     st.write(
-        "#### 📋 Perbandingan Relative Water Content in Leaves (RWCL): Alternatif Kualitatif"
+        "#### 📋 Perbandingan Relative Water Content in Leaves (RWCL): Alternatif Kuantitatif"
     )
     st.dataframe(
         grouped[["Relative Water Content in Leaves (RWCL)"]].style.format("{:.2f}")
@@ -177,7 +185,7 @@ with st.expander("Detail : "):
 
 st.write("#### Alternatif 5 - Weight of 300 Seeds (W3S)")
 with st.expander("Detail : "):
-    st.write("#### 📋 Perbandingan Weight of 300 Seeds (W3S): Alternatif Kualitatif")
+    st.write("#### 📋 Perbandingan Weight of 300 Seeds (W3S): Alternatif Kuantitatif")
     st.dataframe(grouped[["Weight of 300 Seeds (W3S)"]].style.format("{:.2f}"))
 
     # Normalisasi kolom W3S
@@ -231,13 +239,6 @@ st.success(
 
 
 # # Skala pilihan
-# scale = {
-#     "1 - Sama penting": 1,
-#     "3 - Sedikit lebih penting": 3,
-#     "5 - Cukup lebih penting": 5,
-#     "7 - Sangat lebih penting": 7,
-#     "9 - Mutlak lebih penting": 9,
-# }
 
 
 # # st.subheader("📊 Matriks Normalisasi")
