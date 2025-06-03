@@ -24,6 +24,7 @@ kriteria = [
 alternatif = df["Parameters"].unique()
 bibit_df = pd.DataFrame(alternatif, columns=["Bibit"])
 
+
 # Normalisasi matriks
 def calc_norm(M):
     if M.ndim == 1:
@@ -53,6 +54,13 @@ st.write("#### Alternatif")
 with st.expander("Alternatif Bibit : "):
     st.write("#### 🌱 Alternatif Bibit")
     st.dataframe(bibit_df)
+
+grouped = df.groupby("Parameters")[kriteria].mean()
+
+st.write("#### Group by Alternatif Dataset")
+with st.expander("Data Setelah Di-groupby : "):
+    # st.write(pd.DataFrame(grouped, index=alternatif).style.format("{:.2f}"))
+    st.dataframe(grouped.style.format("{:.2f}"))
 
 with st.sidebar:
     st.write("## 🧮 Masukkan Nilai Perbandingan Berpasangan")
@@ -93,9 +101,8 @@ with st.expander("Detail : "):
     # for i in range(n):
     #     st.write(f"- {kriteria[i]}: **{w_MPB[i]:.4f}**")
 
-grouped = df.groupby("Parameters")[kriteria].mean()
 # Tampilkan hasil
-st.write("## Rata-rata Kriteria Tiap Varietas Unik")
+# st.write("## Rata-rata Kriteria Tiap Varietas Unik")
 # st.dataframe(grouped)
 st.write("#### Alternatif 1 - Seed Yield per Unit Area (SYUA)")
 with st.expander("Detail : "):
@@ -103,6 +110,11 @@ with st.expander("Detail : "):
         "#### 📋 Perbandingan Seed Yield per Unit Area (SYUA): Alternatif Kualitatif"
     )
     st.dataframe(grouped[["Seed Yield per Unit Area (SYUA)"]].style.format("{:.2f}"))
+    # st.write(
+    #     pd.DataFrame(
+    #         grouped[["Seed Yield per Unit Area (SYUA)"]], index=alternatif
+    #     ).style.format("{:.2f}")
+    # )
 
     # Normalisasi kolom SYUA
     norm_SYUA = calc_norm(grouped["Seed Yield per Unit Area (SYUA)"].values)
@@ -179,6 +191,7 @@ with st.expander("Detail : "):
 
 # Menyusun matrix alternatif (wM)
 wM = np.column_stack((w_SYUA, w_NP, w_PCO, w_RWCL, w_W3S))
+st.write("## Jawaban Akhir dan Vector Keputusan")
 
 st.write("#### 📋 Matriks Bobot Alternatif")
 st.dataframe(
