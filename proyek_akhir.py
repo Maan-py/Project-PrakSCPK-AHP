@@ -43,7 +43,6 @@ def get_comparisons(kriteria):
             comparisons.append((i, j))
     return comparisons
 
-
 # Alternatif + Kriteria
 st.write("#### Dataset")
 with st.expander("Dataset : "):
@@ -81,7 +80,7 @@ with st.sidebar:
     for i, j in comparisons:
         label = f"{kriteria[i]} vs {kriteria[j]}"
         value = st.slider(
-            label, min_value=1.0, max_value=9.0, value=1.0, step=0.1, key=f"{i}-{j}"
+            label, min_value=1, max_value=9, value=1, step=1, key=f"{i}-{j}"
         )
         MPBk[i][j] = value
         MPBk[j][i] = round(1 / value, 3)
@@ -224,6 +223,44 @@ st.success(
     f"Bibit terbaik terpilih berdasarkan kriteria adalah **{best_alternatif}** dengan nilai akhir **{max_bibit_score:.4f}**"
 )
 
+# # # Langkah 3: Konsistensi (λ_max, CI, CR)
+# # # Hitung λ_max
+# Aw = np.dot(MPBk, w_MPB)
+# lambda_max = np.sum(Aw / w_MPB) / n
+
+# # Consistency Index (CI)
+# CI = (lambda_max - n) / (n - 1)
+
+# # Random Index (RI) tabel (hanya sampai n = 10)
+# RI_dict = {
+#     1: 0.00,
+#     2: 0.00,
+#     3: 0.58,
+#     4: 0.90,
+#     5: 1.12,
+#     6: 1.24,
+#     7: 1.32,
+#     8: 1.41,
+#     9: 1.45,
+#     10: 1.49,
+# }
+# RI = RI_dict.get(n, 1.49)  # default pakai 1.49 jika n > 10
+# CR = CI / RI if RI != 0 else 0
+
+# st.subheader("✅ Konsistensi Matriks")
+# st.write(f"λ Maksimum (λ_max): {lambda_max:.4f}")
+# st.write(f"Consistency Index (CI): {CI:.4f}")
+# st.write(f"Random Index (RI): {RI:.2f}")
+# st.write(f"Consistency Ratio (CR): {CR:.4f}")
+
+# if CR < 0.1:
+#     st.success("Matriks konsisten (CR < 0.1).")
+# else:
+#     st.warning(
+#         "Matriks tidak konsisten (CR ≥ 0.1), silakan sesuaikan penilaian pairwise."
+#     )
+
+
 # grouped = df.groupby("Parameters")[kriteria].mean()
 # # Tampilkan hasil
 # st.subheader("Rata-rata Kriteria Tiap Varietas Unik")
@@ -244,40 +281,3 @@ st.success(
 # # st.subheader("📊 Matriks Normalisasi")
 # # df_norm = pd.DataFrame(w_MPB, index=kriteria, columns=kriteria)
 # # st.dataframe(df_norm.style.format(precision=3))
-
-
-# # # Langkah 3: Konsistensi (λ_max, CI, CR)
-# # # Hitung λ_max
-# # Aw = np.dot(MPBk, w_MPB)
-# # lambda_max = np.sum(Aw / w_MPB) / n
-
-# # # Consistency Index (CI)
-# # CI = (lambda_max - n) / (n - 1)
-
-# # # Random Index (RI) tabel (hanya sampai n = 10)
-# # RI_dict = {
-# #     1: 0.00,
-# #     2: 0.00,
-# #     3: 0.58,
-# #     4: 0.90,
-# #     5: 1.12,
-# #     6: 1.24,
-# #     7: 1.32,
-# #     8: 1.41,
-# #     9: 1.45,
-# #     10: 1.49,
-# # }
-# # RI = RI_dict.get(n, 1.49)  # default pakai 1.49 jika n > 10
-# # CR = CI / RI if RI != 0 else 0
-
-# # st.subheader("✅ Konsistensi Matriks")
-# # st.write(f"λ maks: **{lambda_max:.4f}**")
-# # st.write(f"CI (Consistency Index): **{CI:.4f}**")
-# # st.write(f"CR (Consistency Ratio): **{CR:.4f}**")
-
-# # if CR < 0.1:
-# #     st.success("Matriks konsisten (CR < 0.1).")
-# # else:
-# #     st.warning(
-# #         "Matriks tidak konsisten (CR ≥ 0.1), silakan sesuaikan penilaian pairwise."
-# #     )
