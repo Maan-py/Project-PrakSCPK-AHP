@@ -43,6 +43,48 @@ def get_comparisons(kriteria):
             comparisons.append((i, j))
     return comparisons
 
+
+def validity_check(M, W):
+    """Fungsi untuk mengecek validitas bobot"""
+    n = len(M)
+    RI = {
+        2: 0.00,
+        3: 0.58,
+        4: 0.90,
+        5: 1.12,
+        6: 1.24,
+        7: 1.32,
+        8: 1.41,
+        9: 1.45,
+        10: 1.51,
+        11: 1.53,
+        12: 1.54,
+        13: 1.56,
+        14: 1.57,
+    }
+    # menghitung CV
+    CV = M @ W / W  # operator @ mengalikan matriks sesuai dengan prinsipnya
+    st.write(f"CV: {CV}\n")
+    # menghitung nilai eigen
+    eigen = np.mean(CV)
+    st.write(f"Eigen: {eigen}\n")
+    # mencari nilai RI
+    st.write(f"RI: {RI[n]}\n")
+
+    # menghitung CI
+    CI = (eigen - n) / (n - 1)
+    st.write(f"CI: {CI}\n")
+    # menghitung CR
+    CR = CI / RI[n]
+    st.write(f"CR: {CR}\n")
+    if CR <= 0.1:
+        st.success("✅ Konsistensi matriks dapat diterima (CR ≤ 0.1)")
+    else:
+        st.warning(
+            "⚠️ Konsistensi matriks **tidak dapat diterima** (CR > 0.1). Silakan ubah nilai perbandingan."
+        )
+
+
 # Alternatif + Kriteria
 st.write("#### Dataset")
 with st.expander("Dataset : "):
@@ -105,6 +147,8 @@ with st.expander("Detail : "):
 
     st.write("#### ⭐ Bobot Prioritas (Eigen Vector)")
     st.write(pd.DataFrame(w_MPB, columns=["Eigenvektor"], index=kriteria))
+
+    validity_check(np.array(MPBk), np.array(w_MPB))
     # for i in range(n):
     #     st.write(f"- {kriteria[i]}: **{w_MPB[i]:.4f}**")
 
