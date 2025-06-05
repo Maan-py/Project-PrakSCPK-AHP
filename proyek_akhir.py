@@ -8,6 +8,9 @@ st.set_page_config(
 )
 st.title("SPK AHP: Mencari Bibit Kedelai Terbaik 🌱")
 
+st.write("Muhammad Ruhul Jadid - 1232300")
+st.write("Muhammad Luqmaan - 123230070")
+
 df = pd.read_csv("Advanced Soybean Agricultural Dataset.csv")
 
 # 5 Kriteria
