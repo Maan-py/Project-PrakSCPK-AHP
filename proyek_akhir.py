@@ -122,7 +122,7 @@ with st.sidebar:
     for i, j in comparisons:
         label = f"{kriteria[i]} vs {kriteria[j]}"
         value = st.slider(
-            label, min_value=1, max_value=9, value=1, step=1, key=f"{i}-{j}"
+            label, min_value=0.1, max_value=9.0, value=1.0, step=0.1, key=f"{i}-{j}"
         )
         MPBk[i][j] = value
         MPBk[j][i] = round(1 / value, 3)
@@ -148,7 +148,7 @@ with st.expander("Detail : "):
     st.write("#### ⭐ Bobot Prioritas (Eigen Vector)")
     st.write(pd.DataFrame(w_MPB, columns=["Eigenvektor"], index=kriteria))
 
-    validity_check(np.array(MPBk), np.array(w_MPB))
+    # validity_check(np.array(MPBk), np.array(w_MPB))
     # for i in range(n):
     #     st.write(f"- {kriteria[i]}: **{w_MPB[i]:.4f}**")
 
